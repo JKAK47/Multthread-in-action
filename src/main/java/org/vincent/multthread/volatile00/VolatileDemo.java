@@ -10,13 +10,24 @@ package org.vincent.multthread.volatile00;
  * @since 2018-07-10 10:05 <br/>
  */
 public class  VolatileDemo extends  Thread{
-    volatile boolean flag=false;
+   public volatile VolatileDemo.flag flag=new  flag();
     int i=0;
 
     @Override
     public void run() {
-        while (!flag){
+        while (!flag.isFlag()){
             i++;
         }
     }
+
+    class  flag{
+        boolean flag=false;
+        public boolean isFlag() {
+            return flag;
+        }
+        public void setFlag(boolean flag) {
+            this.flag = flag;
+        }
+    }
+
 }

@@ -16,7 +16,7 @@ public class VolatileTest {
         VolatileDemo test= new VolatileDemo();
         test.start();
         Thread.sleep(2000);
-        test.flag=true;
+        test.flag.setFlag(true);
         System.out.println(test.i);
     }
 
