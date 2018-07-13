@@ -3,6 +3,7 @@ package org.vincent.multthread.volatile00;
 /**
  * Multthread-in-action.org.vincent.multthread <br/>
  * Created by PengRong on 2018/7/10. <br/>
+ *https://www.cnblogs.com/dzblog/p/6913809.html
  *
  * @author PengRong <br/>
  * @Description TODO(${END})
