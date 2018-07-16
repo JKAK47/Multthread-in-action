@@ -6,9 +6,128 @@
     <!-- 多线程案例  -->
     <groupId>org.vincent</groupId>
     <artifactId>Multthread-in-action</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <dependencies>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name> 多线程 案例 实操</name>
+    <properties>
+        <module.version>1.0-SNAPSHOT</module.version>
+        <jar8>1.8</jar8>
+        <jar7>1.7</jar7>
+        <jar6>1.6</jar6>
+        <project.url>www.baidu.com</project.url>
+    </properties>
+    <build>
+        <finalName>multthread-in-action</finalName>
+        <plugins>
+            <!-- 项目范围级别 compiler 全局配置
+                compiler:compile 目标将去编译java代码以及main/resources目录下的资源文件
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <!-- 声明代码使用什么JDK 版本进行编译 -->
+                    <source>${jar8}</source>
+                    <!-- 声明编译后的代码将运行在哪个JDK版本 -->
+                    <target>${jar8}</target>
+                    <!-- 设置编译插件在编译期间使用的JDK版本 -->
+                    <fork>true</fork> <!-- fork = true 让compilerVersion 属性生效。
+                        compilerVersion 属性设置编译器使用的jdk版本 executable 设置使用的jdk路径
+                    -->
+                    <compilerVersion>${jar8}</compilerVersion>
+                    <executable>${JAVA8_HOME}/bin/javac</executable>
+                    <!-- 从 3.0后的编译插件，maven默认使用的编译器 是 javax.tools.JavaCompiler
+                        如果你想强制让这个插件使用javac 设置属性 forceJavacCompilerUse =true 即可。
+                     -->
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                </configuration>
+            </plugin>
 
+            <!-- 自定义生成jar 包的 插件 maven-jar-plugin
+               可实现的功能 ：自定义 manifest 文件
+               设定入口Main 类
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <!-- 创建jar 时候也可以增进/去除一个文件集合
+                    通过 executions 标签的includes/excludes 标签和classifier 标签。
+                 -->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>client</classifier>
+                            <includes>
+                                <include>**/*/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <!--指定自定义的MANIFEST.MF文件 内容 -->
+                        <!-- <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>-->
+                        <index>true</index>
+                        <manifest>
+                            <!-- 将工程依赖的classpath 添加到manifes中，将
+                                在manifest文件中添加如下依赖jar 信息
+                                Class-Path: okhttp-3.3.0.jar okio-1.8.0.jar jackson-databind-2.2.2.jar
+                                 jackson-core-2.2.2.jar jackson-annotations-2.2.2.jar
+                              -->
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!-- 添加入口Main 方法类 -->
+                            <mainClass>org.vincent.multthread.Main</mainClass>
+                            <!-- 让引用jar 安装maven 仓库目录结构去引用 -->
+                           <!-- <classpathLayoutType>repository</classpathLayoutType>-->
+                        </manifest>
+                        <manifestEntries>
+                            <!--往manifest.mf 里面添加属性信息  -->
+                            <mode>development</mode>
+                            <url>${project.url}</url>
+                            <!-- 将jar 当前目录也当作classpath 添加进去 -->
+                            <Class-Path>.</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+
+            <!-- 拷贝依赖的jar包到${project.build.directory}/lib目录 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <type>jar</type>
+                            <includeTypes>jar</includeTypes>
+                           <!-- <useUniqueVersions>false</useUniqueVersions>-->
+                            <!--复制以来的jar 到 ${project.basedir}/target/lib 目录下 -->
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
         <!-- 测试打包可执行依赖包 jar 工程所需jar包引用开始 -->
         <!-- 单元测试 -->
         <dependency>
@@ -16,13 +135,24 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
         <!-- 代码所需依赖 -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.3.0</version>
+            <version>3.9.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.squareup.okio</groupId>
@@ -33,7 +163,7 @@
         <dependency>
             <groupId>com.squareup.okio</groupId>
             <artifactId>okio</artifactId>
-            <version>1.8.0</version>
+            <version>1.13.0</version>
         </dependency>
         <!-- 代码所需依赖 -->
         <dependency>
