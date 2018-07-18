@@ -37,7 +37,7 @@
                         compilerVersion 属性设置编译器使用的jdk版本 executable 设置使用的jdk路径
                     -->
                     <compilerVersion>${jar8}</compilerVersion>
-                    <executable>${JAVA8_HOME}/bin/javac</executable>
+                    <!--<executable>${JAVA8_HOME}/bin/javac</executable>-->
                     <!-- 从 3.0后的编译插件，maven默认使用的编译器 是 javax.tools.JavaCompiler
                         如果你想强制让这个插件使用javac 设置属性 forceJavacCompilerUse =true 即可。
                      -->
