@@ -19,6 +19,15 @@
     <build>
         <finalName>multthread-in-action</finalName>
         <plugins>
+            <!-- 配置打包过程中跳过测试插件， -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <!-- 项目范围级别 compiler 全局配置
                 compiler:compile 目标将去编译java代码以及main/resources目录下的资源文件
             -->
@@ -56,7 +65,7 @@
                 <!-- 创建jar 时候也可以增进/去除一个文件集合
                     通过 executions 标签的includes/excludes 标签和classifier 标签。
                  -->
-                <executions>
+                <!--<executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
@@ -69,7 +78,7 @@
                             </includes>
                         </configuration>
                     </execution>
-                </executions>
+                </executions>-->
                 <configuration>
                     <archive>
                         <!--指定自定义的MANIFEST.MF文件 内容 -->
