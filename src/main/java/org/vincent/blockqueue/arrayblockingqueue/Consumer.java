@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * @Package: org.vincent.multthread.BlockingQueue.ArrayBlockingQueue <br/>
- * @Description： TODO <br/>
+ * @Description： 阻塞消费者 <br/>
  * @author: PengRong <br/>
  * @Date: Created in 2018/9/3 0:51 <br/>
  * @Company: PLCC <br/>
@@ -22,6 +22,7 @@ public class Consumer implements Runnable{
 				this.queue = queue;
 		}
 
+		@Override
 		public void run() {
 				try {
 						System.out.println(queue.take());
