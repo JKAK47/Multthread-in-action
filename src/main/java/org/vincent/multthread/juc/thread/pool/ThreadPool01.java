@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
  * @package org.vincent.multthread.juc.thread.pool
  * @date 2019/3/17 - 11:00
  * @ProjectName Multthread-in-action
- * @Description: TODO
+ * @Description: Executors 提供工具类实现的Cache线程池实现
  */
 public class ThreadPool01 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
