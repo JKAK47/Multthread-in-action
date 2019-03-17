@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -25,12 +26,12 @@ public class ThreadPool02 {
          * 并重写钩子方法 beforeExecute， afterExecute
          * 主要改造点：
              * 创建工作线程的线程工厂
-             * 阻塞队列 ：SynchronousQueue， ArrayBlockingQueue
+             * 阻塞队列 ：SynchronousQueue， ArrayBlockingQueue 对于大量任务很容易抛异常拒绝执行任务；LinkedBlockingQueue 队列很好，不会抛异常
              * 自定义拒绝策略
              * 重写ThreadPoolExecutor类中两个钩子方法 beforeExecute， afterExecute
          *
          * */
-        executorService = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(1),
+        executorService = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(),
                 /** 实现线程池创建线程工厂*/
                 r -> {
                     Thread t = new Thread(null, r, "Vincent-pool-" + new Random().nextInt());
@@ -100,10 +101,12 @@ public class ThreadPool02 {
             System.out.println("execute-only-submit-runnableTask");
             System.out.println("3");
         });
-
         for (int i=0;i<1000;i++){
             executorService.execute(()-> System.out.println("i ="+100));
         }
+
+        /** 当线程数少于核心线程数时候，核心线程是否也有超时机制，true有，false 没有*/
+        executorService.allowCoreThreadTimeOut(false);
         executorService.shutdown();
     }
 
