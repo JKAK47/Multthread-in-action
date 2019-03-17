@@ -5,7 +5,7 @@ package org.vincent.multthread.volatile00;
  * Created by PengRong on 2018/7/11. <br/>
  *
  * @author PengRong <br/>
- * @Description Volatatile 单例模式中测试原子性 (${END})
+ * @Description Volatatile 单例模式中测试防止CPU指令重排 (${END})
  * @ClassName: ${CLASS}
  * @since 2018-07-11 10:29 <br/>
  */

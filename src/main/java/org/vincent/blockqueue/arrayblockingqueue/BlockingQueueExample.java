@@ -1,7 +1,6 @@
 package org.vincent.blockqueue.arrayblockingqueue;
 
 
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -20,7 +19,7 @@ import java.util.concurrent.BlockingQueue;
 public class BlockingQueueExample {
 		public static void main(String[] args) throws InterruptedException {
 				BlockingQueue queue = new ArrayBlockingQueue(1024);
-
+				System.out.println("java.io.tmpdir property: " + System.getProperty("java.io.tmpdir"));
 				Producer producer = new Producer(queue);
 				Consumer consumer = new Consumer(queue);
 				new Thread(producer).start();
