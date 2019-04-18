@@ -1,6 +1,8 @@
 package org.vincent.multthread.juc.thread.pool;
 
+import java.io.File;
 import java.util.Random;
+import java.util.StringTokenizer;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -18,7 +20,29 @@ import java.util.concurrent.TimeUnit;
  * @Description: 自己配置线程池参数
  */
 public class ThreadPool02 {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    //ExtClassLoader类中获取路径的代码
+    private static File[] getExtDirs() {
+        //加载<JAVA_HOME>/lib/ext目录中的类库
+        String s = System.getProperty("java.ext.dirs");
+        File[] dirs;
+        if (s != null) {
+            StringTokenizer st =
+                    new StringTokenizer(s, File.pathSeparator);
+            int count = st.countTokens();
+            dirs = new File[count];
+            for (int i = 0; i < count; i++) {
+                dirs[i] = new File(st.nextToken());
+            }
+        } else {
+            dirs = new File[0];
+        }
+        return dirs;
+    }
+    public static void main(String[] args) throws ExecutionException, InterruptedException, ClassNotFoundException {
+        Class.forName("");
+        getExtDirs();
+        System.out.println(System.getProperty("java.ext.dirs"));
+        System.out.println(System.getProperty("java."));
         ThreadPoolExecutor executorService = null;
 
         /**

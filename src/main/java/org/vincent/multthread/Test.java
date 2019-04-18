@@ -11,4 +11,11 @@ package org.vincent.multthread;
  * @Created by lenovo on 2018/12/26 <br/>
  */
 public class Test {
+    public static void main(String[] args) throws InterruptedException {
+        Test test =new Test();
+        test.waittest();
+    }
+    public  synchronized void  waittest()  {
+        notify();
+    }
 }
