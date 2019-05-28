@@ -26,7 +26,7 @@ import static java.lang.annotation.ElementType.TYPE_USE;
 @Target({ElementType.METHOD,ElementType.FIELD,ElementType.ANNOTATION_TYPE,ElementType.CONSTRUCTOR,PARAMETER,TYPE_USE})
 @Constraint(validatedBy = {StatusValidator.class})
 public @interface Status {
-    String message() default "不正确的状态 , 应该是 'created', 'paid', shipped', closed'其中之一";
+    String message() default "不正确的状态 , 应该是 'created', 'paid', shipped', closed'其中之一 by pr.  "; /** message  属性指定当属性不满足条件时候 输出错误信息 */
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

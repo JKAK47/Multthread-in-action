@@ -24,14 +24,14 @@ import static java.lang.annotation.ElementType.TYPE_USE;
  * @ProjectName Multthread-in-action
  * @Description: 定制化 constraint 校验规则, 由两个内置的 constraint 组合而成。 Min,Max 两个校验规则
  */
-@Min(value = 8000)
-@Max(value = 10000)
+@Min(value = 8000,message = "不能小于 8000 by pr")
+@Max(value = 10000,message = "不能大于 10000 by pr") /** message 是当校验规则 不通过时候输出的error 信息 */
 @Constraint(validatedBy = {}) /** 组合原来的 校验注解，不用实现 自己的校验方法 */
 @Documented
 @Target({ANNOTATION_TYPE, METHOD, FIELD, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Price {
-    String message() default "错误的价格";
+    String message() default "错误的价格，正确区间是在 8000-10000";
 
     Class<?>[] groups() default {};
 
