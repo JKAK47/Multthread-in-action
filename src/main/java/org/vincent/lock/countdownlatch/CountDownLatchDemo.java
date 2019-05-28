@@ -15,10 +15,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class CountDownLatchDemo {
     public static void main(String[] args) throws InterruptedException {
+        /** 定义了 16 个任务 .*/
         int N = 16;
         /** 所有子线程结束的信号*/
         CountDownLatch doneSignal = new CountDownLatch(N);
-        /** 所有子线程开始运行的信号*/
+        /** 所有子线程开始运行的信号，调用方给的一个启动信号 。*/
         CountDownLatch startSignal = new CountDownLatch(1);
         ExecutorService e = Executors.newFixedThreadPool(8);
 

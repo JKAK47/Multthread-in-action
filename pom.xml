@@ -15,6 +15,8 @@
         <jar7>1.7</jar7>
         <jar6>1.6</jar6>
         <project.url>www.baidu.com</project.url>
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <hibernate.validation.version>6.0.16.Final</hibernate.validation.version>
     </properties>
     <build>
         <finalName>multthread-in-action</finalName>
@@ -200,7 +202,32 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.2.2</version>
         </dependency>
+        <!-- JSR 303 验证器 begin -->
+
+        <!-- JSR 303 验证器 接口 API -->
+        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+        <!-- JSR 303 验证器 接口 API 实现  -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validation.version}</version>
+        </dependency>
+        <!-- JSR 303 需要这个 EL 表达式 才能触发校验   -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.1-b08</version>
+        </dependency>
+        <!-- JSR 303 验证器 stop -->
         <!-- 工程所需jar包引用结束 -->
+
+
     </dependencies>
 
 </project>
