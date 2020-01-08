@@ -16,7 +16,7 @@
         <jar6>1.6</jar6>
         <project.url>www.baidu.com</project.url>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <hibernate.validation.version>6.0.16.Final</hibernate.validation.version>
+        <hibernate.validation.version>6.1.0.Final</hibernate.validation.version>
     </properties>
     <build>
         <finalName>multthread-in-action</finalName>
